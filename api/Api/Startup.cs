@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using Infrastructure;
+using Infrastructure.Extensions;
+using Infrastructure.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,7 +33,10 @@ namespace Api
         {
             services.AddControllers();
 
-            services.AddInfrastructure(Configuration);
+            services
+                .AddDatabaseConfiguration(Configuration.GetConnectionString("DefaultConnection"))
+                .AddIdentityServerConfig(Configuration)
+                .AddServices<ApplicationUser>();
 
             services.AddSwaggerGen(c =>
             {

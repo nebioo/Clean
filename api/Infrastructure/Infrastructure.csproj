@@ -12,18 +12,23 @@
     <Folder Include="Files\" />
     <Folder Include="Persistence\Configurations\" />
     <Folder Include="Persistence\Migrations\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.4">
+    <PackageReference Include="IdentityServer4" Version="3.1.3" />
+    <PackageReference Include="IdentityServer4.AspNetIdentity" Version="3.1.3" />
+    <PackageReference Include="IdentityServer4.EntityFramework" Version="3.1.3" />
+    <PackageReference Include="IdentityServer4.Storage" Version="3.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="3.1.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Npgsql" Version="4.1.3.1" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.0" />
   </ItemGroup>
 
 </Project>

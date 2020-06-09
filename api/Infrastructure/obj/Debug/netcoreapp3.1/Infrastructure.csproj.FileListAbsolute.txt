@@ -27,5 +27,5 @@ C:\Users\tm\Documents\code\Clean\api\Infrastructure\obj\Debug\netcoreapp3.1\Infr
 C:\Users\tm\Documents\code\Clean\api\Infrastructure\obj\Debug\netcoreapp3.1\Infrastructure.pdb
 C:\Users\tm\Documents\code\Clean\api\Infrastructure\bin\Debug\netcoreapp3.1\Infrastructure.runtimeconfig.json
 C:\Users\tm\Documents\code\Clean\api\Infrastructure\bin\Debug\netcoreapp3.1\Infrastructure.runtimeconfig.dev.json
-C:\Users\tm\Documents\code\Clean\api\Infrastructure\obj\Debug\netcoreapp3.1\Infrastructure.csproj.CoreCompileInputs.cache
 C:\Users\tm\Documents\code\Clean\api\Infrastructure\obj\Debug\netcoreapp3.1\Infrastructure.genruntimeconfig.cache
+C:\Users\tm\Documents\code\Clean\api\Infrastructure\obj\Debug\netcoreapp3.1\Infrastructure.csproj.CoreCompileInputs.cache
