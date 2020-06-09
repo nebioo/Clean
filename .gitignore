@@ -413,3 +413,7 @@ api/Api/bin/Debug/netcoreapp3.1/Api.dll
 api/Api/bin/Debug/netcoreapp3.1/Api.deps.json
 api/.vs/Clean/v16/.suo
 api/.vs/Clean/config/applicationhost.config
+
+
+.vs/Clean
+api/.vs/Clean/v16/.suo
