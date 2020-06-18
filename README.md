@@ -1,16 +1,14 @@
 # Clean Architecture Sample Project
 
 ## Api
-  -asp.net core
+  -asp.net core 3.1
   
   -jwt auth
   
   -ef core
   
 ## Ui
-  -vue.js
-  
-  -nuxt.js
+  -angular 9
   
 ## Database
   -postgresql
