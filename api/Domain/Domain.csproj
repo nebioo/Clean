@@ -6,9 +6,7 @@
 
   <ItemGroup>
     <Folder Include="Common\" />
-    <Folder Include="Entities\" />
     <Folder Include="Enums\" />
-    <Folder Include="Exceptions\" />
     <Folder Include="ValueObjects\" />
   </ItemGroup>
 

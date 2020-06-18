@@ -5,13 +5,10 @@ using System.Text;
 
 namespace Application.Common.Models
 {
-    public class RegisterRequestViewModel
+    public class AuthenticateModel
     {
         [Required]
-        public string Name { get; set; }
-
-        [Required]
-        public string Email { get; set; }
+        public string Username { get; set; }
 
         [Required]
         public string Password { get; set; }
