@@ -16,7 +16,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public class AccountsController : ApiController
     {
