@@ -10,6 +10,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./api/Api
 
     steps:
     - uses: actions/checkout@v2
@@ -17,9 +19,9 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-    - name: Change dir
-      run: cd api/Api/
     - name: Install dependencies
       run: dotnet restore
+      working-directory: ${{env.working-directory}}
     - name: Build
       run: dotnet build
+      working-directory: ${{env.working-directory}}
