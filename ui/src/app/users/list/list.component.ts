@@ -3,13 +3,18 @@ import { first } from 'rxjs/operators';
 
 import { AccountService } from '../../_services/account.service';
 
+import {ConfirmationService} from 'primeng/api';
+
 @Component({
   templateUrl: './list.component.html',
 })
 export class ListComponent implements OnInit {
   users = null;
 
-  constructor(private accountService: AccountService) {}
+  constructor(
+    private accountService: AccountService,
+    private confirmationService: ConfirmationService
+  ) {}
 
   ngOnInit() {
     this.accountService
@@ -19,13 +24,18 @@ export class ListComponent implements OnInit {
   }
 
   deleteUser(id: string) {
-    const user = this.users.find((x) => x.id === id);
-    user.isDeleting = true;
-    this.accountService
-      .delete(id)
-      .pipe(first())
-      .subscribe(() => {
-        this.users = this.users.filter((x) => x.id !== id);
-      });
+    this.confirmationService.confirm({
+      message: 'Do you want to delete this record?',
+      accept: () => {
+        const user = this.users.find((x) => x.id === id);
+        user.isDeleting = true;
+        this.accountService
+          .delete(id)
+          .pipe(first())
+          .subscribe(() => {
+            this.users = this.users.filter((x) => x.id !== id);
+          });
+      },
+    });
   }
 }

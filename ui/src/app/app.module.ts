@@ -11,6 +11,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AlertComponent } from './_components/alert/alert.component';
 
+//primeng 
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
+
 
 @NgModule({
   declarations: [
@@ -22,7 +26,9 @@ import { AlertComponent } from './_components/alert/alert.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    ConfirmDialogModule,
+    ConfirmationService
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
