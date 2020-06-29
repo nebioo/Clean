@@ -16,6 +16,8 @@
   -postgresql
 
 ## Usage
+
+### for api
 open project folder
 ```bash
 cd Api\
@@ -26,3 +28,10 @@ dotnet run
 ```
 
 open https://localhost:5001/swagger/index.html in browser
+
+### for ui 
+open project folder
+```bash
+npm install 
+ng serve
+```
