@@ -9,15 +9,10 @@
   
   -ef core
   
-## Ui
-  -angular 9
-  
 ## Database
-  -postgresql
+  -postgresql 
 
-## Usage
-
-### for api
+## Api usage
 open project folder
 ```bash
 cd Api\
@@ -28,10 +23,3 @@ dotnet run
 ```
 
 open https://localhost:5001/swagger/index.html in browser
-
-### for ui 
-open project folder
-```bash
-npm install 
-ng serve
-```
