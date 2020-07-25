@@ -49,6 +49,7 @@ namespace Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
 
+            
             // configure strongly typed settings objects
             var appSettingsSection = _configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
@@ -88,6 +89,8 @@ namespace Api
                     ValidateAudience = false
                 };
             });
+
+
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
