@@ -3,6 +3,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
 using Infrastructure;
+using Infrastructure.BlobStorage;
 using Infrastructure.Extensions;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -87,6 +88,8 @@ namespace Api
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+
+            services.AddSingleton<IBlobStorage, BlobStorage>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

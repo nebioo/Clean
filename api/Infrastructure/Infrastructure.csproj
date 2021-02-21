@@ -11,7 +11,6 @@
   <ItemGroup>
     <Folder Include="Files\" />
     <Folder Include="Identity\" />
-    <Folder Include="BlobStorage\" />
     <Folder Include="Persistence\Configurations\" />
     <Folder Include="Persistence\Migrations\" />
   </ItemGroup>
