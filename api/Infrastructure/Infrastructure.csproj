@@ -11,8 +11,8 @@
   <ItemGroup>
     <Folder Include="Files\" />
     <Folder Include="Identity\" />
+    <Folder Include="Migrations\" />
     <Folder Include="Persistence\Configurations\" />
-    <Folder Include="Persistence\Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -6,8 +6,12 @@
 
   <ItemGroup>
     <Folder Include="Contract\" />
-    <Folder Include="Response\" />
-    <Folder Include="Request\" />
+    <Folder Include="Request\Query\FileQueries\" />
+    <Folder Include="Response\Query\FileQueries\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
 
 </Project>

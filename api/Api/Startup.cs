@@ -1,11 +1,14 @@
 using System;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
+using ApplicationService.Handler.Command.FileCommands;
 using Infrastructure;
 using Infrastructure.BlobStorage;
 using Infrastructure.Extensions;
 using Infrastructure.Services;
+using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,6 +35,8 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+
             services.AddCors();
             services.AddControllers();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -63,7 +68,7 @@ namespace Api
                     OnTokenValidated = context =>
                     {
                         var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
-                        var userId = int.Parse(context.Principal.Identity.Name);
+                        var userId = Guid.Parse(context.Principal.Identity.Name);
                         var user = userService.GetById(userId);
                         if (user == null)
                         {
@@ -84,7 +89,7 @@ namespace Api
                 };
             });
 
-
+            services.AddMediatR(typeof(UploadFileCommandHandler).GetTypeInfo().Assembly);
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();

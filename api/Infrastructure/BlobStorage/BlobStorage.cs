@@ -3,6 +3,7 @@ using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,11 +14,16 @@ namespace Infrastructure.BlobStorage
 {
     public class BlobStorage : IBlobStorage
     {
+        private readonly IConfiguration _configuration;
         private readonly BlobServiceClient _blobServiceClient;
         BlobContainerClient _blobContainerClient;
 
-        public BlobStorage()
+        public BlobStorage(
+            IConfiguration configuration
+            )
         {
+            _configuration = configuration;
+            _blobServiceClient = new BlobServiceClient(_configuration.GetConnectionString("AccessKey"));
         }
 
         public async Task DeleteAsync(string fileName, string containerName)
