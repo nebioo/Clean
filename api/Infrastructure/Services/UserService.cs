@@ -5,7 +5,6 @@ using Infrastructure.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Infrastructure.Services
 {
@@ -43,7 +42,7 @@ namespace Infrastructure.Services
             return _context.Users;
         }
 
-        public User GetById(int id)
+        public User GetById(Guid id)
         {
             return _context.Users.Find(id);
         }
@@ -107,7 +106,7 @@ namespace Infrastructure.Services
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(Guid id)
         {
             var user = _context.Users.Find(id);
             if (user != null)

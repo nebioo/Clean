@@ -1,14 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Common
 {
     public abstract class AuditableEntity
     {
-        public string CreatedBy { get; set; }
-        public DateTime Created { get; set; }
-        public string LastModifiedBy { get; set; }
-        public DateTime? LastModified { get; set; }
+        [Key]
+        public Guid Id { get; set; }
+
+        [Column(Order = 200)]
+        public DateTime CreatedDate { get; set; }
+
+        [Column(Order = 201)]
+        public DateTime? ModifiedDate { get; set; }
+
+        [Column(Order = 202)]
+        public bool IsActive { get; protected set; }
     }
 }
