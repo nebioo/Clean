@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using ApplicationService.Common.Models;
 using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -32,13 +33,14 @@ namespace Infrastructure.BlobStorage
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
             await blobClient.DeleteAsync();
         }
-        public async Task<Stream> DownloadAsync(string fileName, string containerName)
+        public async Task<BlobDownloadModel> DownloadAsync(string fileName, string containerName)
         {
             _blobContainerClient = _blobServiceClient.GetBlobContainerClient(containerName);
             BlobClient blobClient = _blobContainerClient.GetBlobClient(fileName);
-            Response<BlobDownloadInfo> response = await blobClient.DownloadAsync();
-            //response.Value -> Tüm bilgileri getirecektir.
-            return response.Value.Content;
+
+            var uri = blobClient.Uri.AbsoluteUri;
+            var name = blobClient.Name;            
+            return new BlobDownloadModel { Name = name, Uri = uri };
         }
         public async Task<List<string>> GetLogAsync(string fileName)
         {
@@ -83,5 +85,10 @@ namespace Infrastructure.BlobStorage
             BlobClient blobClient = _blobContainerClient.GetBlobClient(name);
             await blobClient.UploadAsync(fileStream);
         }
+
+
+
     }
+
+
 }
