@@ -5,7 +5,7 @@
 ## Api
   -asp.net core 5.0
   
-  -MediatR, CQRS
+  -MediatR, CQRS, Generic Repository
   
   -jwt auth
   
