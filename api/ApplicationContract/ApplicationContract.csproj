@@ -6,8 +6,6 @@
 
   <ItemGroup>
     <Folder Include="Contract\" />
-    <Folder Include="Request\Query\FileQueries\" />
-    <Folder Include="Response\Query\FileQueries\" />
   </ItemGroup>
 
   <ItemGroup>
