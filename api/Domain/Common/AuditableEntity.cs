@@ -17,5 +17,10 @@ namespace Domain.Common
 
         [Column(Order = 202)]
         public bool IsActive { get; protected set; }
+
+        public void setIsActive(bool value)
+        {
+            IsActive = value;
+        }
     }
 }
