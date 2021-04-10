@@ -1,5 +1,6 @@
 ﻿using Application.Common.Interfaces;
 using Domain.Entities;
+using Domain.FileAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
@@ -12,5 +13,6 @@ namespace Infrastructure.Persistence
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<File> Files { get; set; }
     }
 }

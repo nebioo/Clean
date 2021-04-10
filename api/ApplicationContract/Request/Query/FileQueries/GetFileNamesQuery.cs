@@ -1,14 +1,11 @@
-﻿using ApplicationContract.Response.Query.FileQueries;
+﻿using System.Collections.Generic;
+using ApplicationContract.Contract;
+using ApplicationContract.Response;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApplicationContract.Request.Query.FileQueries
 {
-    public class GetFileNamesQuery : IRequest<GetFileNamesQueryResult>
+    public class GetFileNamesQuery : IRequest<ResponseBase<List<FileNameDto>>>
     {
         public string ContainerName { get; set; }
     }

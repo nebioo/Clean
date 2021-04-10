@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using ApplicationContract.Contract;
 
 namespace Infrastructure.BlobStorage
 {
@@ -55,11 +56,14 @@ namespace Infrastructure.BlobStorage
                 logs.Add(line);
             return logs;
         }
-        public List<string> GetNames(string containerNames)
+        public List<FileNameDto> GetNames(string containerNames)
         {
-            List<string> blobNames = new List<string>();
+            var blobNames = new List<FileNameDto>();
             _blobContainerClient = _blobServiceClient.GetBlobContainerClient(containerNames);
-            return _blobContainerClient.GetBlobs().Select(b => b.Name).ToList();
+            return _blobContainerClient.GetBlobs().Select(b => new FileNameDto
+            {
+                FileName = b.Name
+            }).ToList();
         }
         public async Task SetLogAsync(string text, string fileName)
         {

@@ -1,18 +1,14 @@
 ﻿using Application.Common.Interfaces;
+using ApplicationContract.Contract;
 using ApplicationContract.Request.Query.FileQueries;
-using ApplicationContract.Response.Query.FileQueries;
+using ApplicationContract.Response;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace ApplicationService.Handler.Query.FileCommands
 {
-    public class DownloadFileQueryHandler : IRequestHandler<DownloadFileQuery, DownloadFileQueryResult>
+    public class DownloadFileQueryHandler : IRequestHandler<DownloadFileQuery, ResponseBase<DownloadFileDto>>
     {
         private readonly IBlobStorage _blobStorage;
 
@@ -23,25 +19,19 @@ namespace ApplicationService.Handler.Query.FileCommands
             _blobStorage = blobStorage;
         }
 
-        public async Task<DownloadFileQueryResult> Handle(DownloadFileQuery request, CancellationToken cancellationToken)
+        public async Task<ResponseBase<DownloadFileDto>> Handle(DownloadFileQuery request, CancellationToken cancellationToken)
         {
+            var stream = await _blobStorage.DownloadAsync(request.FileName, request.ContainerName);
 
-            try
+            return new ResponseBase<DownloadFileDto>
             {
-                var stream = await _blobStorage.DownloadAsync(request.FileName, request.ContainerName);
-
-                return new DownloadFileQueryResult()
+                Data = new DownloadFileDto
                 {
                     Name = stream.Name,
-                    Uri = stream.Uri,
-                    Success = true
-                };
-            }
-            catch (Exception)
-            {
-                return new DownloadFileQueryResult() { Success = false };
-            }
-
+                    Uri = stream.Uri
+                },
+                Success = true
+            };
         }
     }
 }
