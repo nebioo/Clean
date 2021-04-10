@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Entities;
 
 namespace Domain.FileAggregate
 {
@@ -6,5 +7,7 @@ namespace Domain.FileAggregate
     {
         public string Name { get; protected set; }
         public string Path { get; protected set; }
+
+        public User User { get; set; }
     }
 }
