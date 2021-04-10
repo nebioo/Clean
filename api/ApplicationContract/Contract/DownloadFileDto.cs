@@ -1,6 +1,6 @@
-﻿namespace ApplicationService.Common.Models
+﻿namespace ApplicationContract.Contract
 {
-    public class BlobDownloadModel
+    public class DownloadFileDto
     {
         public string Name { get; set; }
         public string Uri { get; set; }

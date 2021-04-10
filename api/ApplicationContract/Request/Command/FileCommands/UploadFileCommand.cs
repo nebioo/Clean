@@ -1,14 +1,10 @@
-﻿using ApplicationContract.Response.Command.FileCommands;
+﻿using ApplicationContract.Contract;
+using ApplicationContract.Response;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ApplicationContract.Request.Command.FileCommands
 {
-    public class UploadFileCommand : IRequest<UploadFileCommandResult>
+    public class UploadFileCommand : IRequest<ResponseBase<UploadFileDto>>
     {
         public string FileName { get; set; }
     }

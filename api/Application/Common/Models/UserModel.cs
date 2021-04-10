@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Application.Common.Models
+﻿namespace Application.Common.Models
 {
     public class UserModel
     {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using ApplicationContract.Contract;
 
 namespace Application.Common.Interfaces
 {
@@ -12,6 +13,6 @@ namespace Application.Common.Interfaces
         Task DeleteAsync(string fileName, string containerName);
         Task SetLogAsync(string text, string fileName);
         Task<List<string>> GetLogAsync(string fileName);
-        List<string> GetNames(string containerNames);
+        List<FileNameDto> GetNames(string containerNames);
     }
 }
