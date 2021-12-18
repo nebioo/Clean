@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,6 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Contract" />
+    <Folder Include="Request\Command" />
+    <Folder Include="Request\Query" />
     <Folder Include="Response\Command\" />
     <Folder Include="Response\Query\" />
   </ItemGroup>

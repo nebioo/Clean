@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Domain.Common;
-using Domain.FileAggregate;
 
 namespace Domain.Entities
 {
@@ -12,7 +11,6 @@ namespace Domain.Entities
         public string Email { get; set; }
         public byte[] PasswordHash { get; set; }
         public byte[] PasswordSalt { get; set; }
-
-        private ICollection<File> Files { get; set; }
+        
     }
 }

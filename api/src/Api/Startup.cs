@@ -3,9 +3,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Application.Common.Interfaces;
-using ApplicationService.Handler.Command.FileCommands;
 using Infrastructure;
-using Infrastructure.BlobStorage;
 using Infrastructure.Extensions;
 using Infrastructure.Services;
 using MediatR;
@@ -88,13 +86,10 @@ namespace Api
                     ValidateAudience = false
                 };
             });
-
-            services.AddMediatR(typeof(UploadFileCommandHandler).GetTypeInfo().Assembly);
-
+            
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
 
-            services.AddSingleton<IBlobStorage, BlobStorage>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
