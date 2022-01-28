@@ -10,8 +10,7 @@
   -jwt auth
   
   -ef core
-  
-  -azure blob storage
+ 
   
 ## Database
   -postgresql 
