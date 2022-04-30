@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Common
 {
-    public abstract class AuditableEntity
+    public abstract class DomainBase
     {
         [Key]
         public Guid Id { get; set; }

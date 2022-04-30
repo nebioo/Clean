@@ -1,5 +1,4 @@
 ﻿using Application.Common.Interfaces;
-using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
@@ -11,6 +10,5 @@ namespace Infrastructure.Persistence
 
         }
 
-        public DbSet<User> Users { get; set; }
     }
 }

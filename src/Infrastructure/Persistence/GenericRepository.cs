@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Persistence
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : AuditableEntity
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : DomainBase
     {
         private readonly DbContext _dbContext;
         public readonly DbSet<TEntity> _entities;

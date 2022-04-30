@@ -1,6 +1,4 @@
-﻿using Application.Common.Models;
-using AutoMapper;
-using Domain.Entities;
+﻿using AutoMapper;
 
 namespace Application.Common.Mappings
 {
@@ -8,9 +6,6 @@ namespace Application.Common.Mappings
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserModel>();
-            CreateMap<RegisterModel, User>();
-            CreateMap<UpdateModel, User>();
         }
     }
 }

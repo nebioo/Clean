@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain
 {
-    public interface IGenericRepository<TEntity> where TEntity : AuditableEntity
+    public interface IGenericRepository<TEntity> where TEntity : DomainBase
     {
         IQueryable<TEntity> Table();
         Task<TEntity> GetByIdAsync(Guid id, bool isActive = true);
@@ -15,8 +15,8 @@ namespace Domain
         Task<TEntity> FindByAsync(Expression<Func<TEntity, bool>> predicate);
         Task<List<TEntity>> FilterByAsync(Expression<Func<TEntity, bool>> predicate, bool isActive = true);
         Task SaveAsync(TEntity entity);
-        //to do update has to be async
-        TEntity Update(TEntity entity);
+        //to do update has to be async
+        TEntity Update(TEntity entity);
         void Delete(TEntity entity);
 
     }
