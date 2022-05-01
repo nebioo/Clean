@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain.TodoAggregate;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        //DbSet<User> Users { get; set; }
+        DbSet<Todo> Todos { get; set; }
     }
 }

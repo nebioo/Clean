@@ -1,8 +1,41 @@
 version: '3.4'
 
 services:
-  api:
-    image: ${DOCKER_REGISTRY-}api
+  clean.api:
+    container_name: 'cleanapi-app'
+    image: 'cleanapi'
     build:
       context: .
-      dockerfile: Api/Dockerfile
+      dockerfile: src/Api/Dockerfile
+    ports:
+      - '8000:80'
+    depends_on:
+      - 'postgres'
+    environment:
+      DbConnectionString: "host=postgres;Port=5432;Database=postgres;User Id=postgres;Password=12345"
+      ASPNETCORE_URLS: "http://+:80"
+      ASPNETCORE_ENVIRONMENT: "Staging"
+    networks:
+      - clean-network
+  
+  postgres:
+    ports:
+      - '5432:5432'
+    container_name: 'cleanapi-postgresql'
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+      - './src/Api/Data/postgres:/var/lib/postgresql/data'
+    image: 'postgres'
+    environment:
+      - POSTGRES_USER = postgres
+      - POSTGRES_PASSWORD= 12345
+      - POSTGRES_DB=postgres
+    networks:
+      - clean-network
+
+volumes:
+  db_volume:
+
+networks:
+  clean-network:
+    driver: bridge

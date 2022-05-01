@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Domain.TodoAggregate;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
@@ -10,5 +11,6 @@ namespace Infrastructure.Persistence
 
         }
 
+        public DbSet<Todo> Todos { get; set; }
     }
 }
