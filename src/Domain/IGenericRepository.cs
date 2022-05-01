@@ -9,15 +9,15 @@ namespace Domain
 {
     public interface IGenericRepository<TEntity> where TEntity : DomainBase
     {
+        Task Add(TEntity entity);
+        Task<int> Count();
+        Task<ICollection<TEntity>> Filter(Expression<Func<TEntity, bool>> match);
+        Task<TEntity> Find(Expression<Func<TEntity, bool>> match);
+        Task<TEntity> FindByProperties(Expression<Func<TEntity, bool>> match, string includeProperties = "");
+        Task<ICollection<TEntity>> GetAll();
+        Task<TEntity> GetById(int id);
         IQueryable<TEntity> Table();
-        Task<TEntity> GetByIdAsync(Guid id, bool isActive = true);
-        Task<List<TEntity>> AllAsync(bool isActive = true);
-        Task<TEntity> FindByAsync(Expression<Func<TEntity, bool>> predicate);
-        Task<List<TEntity>> FilterByAsync(Expression<Func<TEntity, bool>> predicate, bool isActive = true);
-        Task SaveAsync(TEntity entity);
-        //to do update has to be async
         TEntity Update(TEntity entity);
-        void Delete(TEntity entity);
 
     }
 }

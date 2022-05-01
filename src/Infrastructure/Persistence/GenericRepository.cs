@@ -11,55 +11,65 @@ namespace Infrastructure.Persistence
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : DomainBase
     {
-        private readonly DbContext _dbContext;
-        public readonly DbSet<TEntity> _entities;
+        private readonly ApplicationDbContext context;
 
-        protected GenericRepository(DbContext context)
+        public GenericRepository(ApplicationDbContext context)
         {
-            _entities = context.Set<TEntity>();
-            _dbContext = context;
+            this.context = context;
         }
 
-        public IQueryable<TEntity> Table()
+        public virtual IQueryable<TEntity> Table()
         {
-            return _entities.AsQueryable();
+            return context.Set<TEntity>().AsQueryable();
         }
 
-        public async Task<TEntity> GetByIdAsync(Guid id, bool isActive = true)
+        public virtual async Task<ICollection<TEntity>> GetAll()
         {
-            return await _entities.SingleOrDefaultAsync(s => s.Id == id && s.IsActive == isActive);
+            return await context.Set<TEntity>().ToListAsync();
         }
 
-        public async Task<List<TEntity>> AllAsync(bool isActive = true)
+        public virtual async Task<TEntity> GetById(int id)
         {
-            return await _entities.Where(s => s.IsActive == isActive).AsQueryable().ToListAsync();
+            return await context.Set<TEntity>().FindAsync(id);
         }
 
-        public async Task<TEntity> FindByAsync(Expression<Func<TEntity, bool>> predicate)
+        public virtual async Task<TEntity> Find(Expression<Func<TEntity, bool>> match)
         {
-            return await _entities.SingleOrDefaultAsync(predicate);
+            return await context.Set<TEntity>().SingleOrDefaultAsync(match);
         }
 
-        public async Task<List<TEntity>> FilterByAsync(Expression<Func<TEntity, bool>> predicate, bool isActive = true)
+        public virtual async Task<TEntity> FindByProperties(Expression<Func<TEntity, bool>> match, string includeProperties = "")
         {
-            return await _entities.Where(predicate).Where(s => s.IsActive == isActive).ToListAsync();
+            IQueryable<TEntity> query = context.Set<TEntity>();
+
+            if (match != null)
+                query = query.Where(match);
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                query = query.Include(includeProperty);
+
+            return await query.SingleOrDefaultAsync();
         }
 
-        public async Task SaveAsync(TEntity entity)
+        public virtual async Task<ICollection<TEntity>> Filter(Expression<Func<TEntity, bool>> match)
         {
-            await _entities.AddAsync(entity);
+            return await context.Set<TEntity>().Where(match).ToListAsync();
         }
 
-        public TEntity Update(TEntity entity)
+        public virtual async Task Add(TEntity entity)
         {
-            var entityEntry = _entities.Update(entity);
+            await context.Set<TEntity>().AddAsync(entity);
+        }
+
+        public virtual TEntity Update(TEntity entity)
+        {
+            var entityEntry = context.Set<TEntity>().Update(entity);
             return entityEntry.Entity;
         }
 
-        public void Delete(TEntity entity)
+        public virtual async Task<int> Count()
         {
-            entity.setIsActive(false);
+            return await context.Set<TEntity>().CountAsync();
         }
-
     }
 }

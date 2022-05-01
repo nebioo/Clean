@@ -2,7 +2,7 @@
 
 namespace Domain.TodoAggregate;
 
-public class Todo : DomainBase
+public class TodoItem : DomainBase
 {
     public string Name { get; set; }
     public string Description { get; set; }
