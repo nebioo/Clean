@@ -5,19 +5,13 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Domain
-{
-    public interface IGenericRepository<TEntity> where TEntity : DomainBase
-    {
-        Task Add(TEntity entity);
-        Task<int> Count();
-        Task<ICollection<TEntity>> Filter(Expression<Func<TEntity, bool>> match);
-        Task<TEntity> Find(Expression<Func<TEntity, bool>> match);
-        Task<TEntity> FindByProperties(Expression<Func<TEntity, bool>> match, string includeProperties = "");
-        Task<ICollection<TEntity>> GetAll();
-        Task<TEntity> GetById(int id);
-        IQueryable<TEntity> Table();
-        TEntity Update(TEntity entity);
+namespace Domain;
 
-    }
+public interface IGenericRepository<T> where T : DomainBase
+{
+    Task<List<T>> GetAllAsync(bool isActive = true);
+    Task<T> GetByIdAsync(Guid id, bool isActive = true);
+    Task SaveAsync(T entity);
+    T Update(T entity);
+
 }

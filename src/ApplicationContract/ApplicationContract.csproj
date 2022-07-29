@@ -4,6 +4,12 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="MediatR" Version="10.0.1" />
   </ItemGroup>
@@ -14,6 +20,12 @@
     <Folder Include="Request\Query" />
     <Folder Include="Response\Command\" />
     <Folder Include="Response\Query\" />
+    <Folder Include="Request\Command\" />
+    <Folder Include="Request\Query\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Remove="Request\Command\" />
+    <None Remove="Request\Query\" />
+  </ItemGroup>
 </Project>

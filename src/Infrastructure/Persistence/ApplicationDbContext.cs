@@ -1,67 +1,51 @@
-﻿using Domain.TodoAggregate;
-using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using Domain.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
+using Infrastructure.Mapper;
 
-namespace Infrastructure.Persistence
+namespace Infrastructure.Persistence;
+
+public class ApplicationDbContext : DbContext
 {
-    public class ApplicationDbContext : DbContext
+    public ApplicationDbContext(DbContextOptions options) : base(options)
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options ) : base (options)
-        {
+    }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        new TodoMapper().BaseMap(modelBuilder);
+
+        base.OnModelCreating(modelBuilder);
+    }
+
+    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        this.ChangeTracker.DetectChanges();
+        var added = this.ChangeTracker.Entries()
+            .Where(t => t.State == EntityState.Added)
+            .Select(t => t.Entity)
+            .ToArray();
+
+        foreach (var entity in added)
+        {
+            if (entity is not DomainBase track) continue;
+            track.CreatedDate = DateTime.Now;
+            track.SetIsActive(true);
         }
 
-        #region Domains
-        public DbSet<TodoItem> Todos { get; set; }
-        public DbSet<TodoList> TodoLists { get; set; }
+        var modified = this.ChangeTracker.Entries()
+            .Where(t => t.State == EntityState.Modified)
+            .Select(t => t.Entity)
+            .ToArray();
 
-        #endregion
-
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        foreach (var entity in modified)
         {
+            if (entity is not DomainBase track) continue;
+            track.ModifiedDate = DateTime.Now;
         }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            var typesToRegister = Assembly.GetExecutingAssembly().GetTypes()
-                .Where(type => !string.IsNullOrEmpty(type.Namespace))
-                .Where(type => type.BaseType != null && type.BaseType.IsGenericType
-                && type.BaseType.GetGenericTypeDefinition() == typeof(IEntityTypeConfiguration<>));
-            foreach (var type in typesToRegister)
-            {
-                dynamic configurationInstance = Activator.CreateInstance(type);
-                modelBuilder.ApplyConfiguration(configurationInstance);
-            }
-            base.OnModelCreating(modelBuilder);
-        }
-
-        private void PreInsertListener()
-        {
-            foreach (var entity in ChangeTracker.Entries<DomainBase>().Where(x => x.State == EntityState.Added).ToList())
-            {
-                entity.Entity.CreatedDate = DateTime.Now;
-            }
-        }
-
-        private void UpdateListener()
-        {
-            foreach (var entity in ChangeTracker.Entries<DomainBase>().Where(x => x.State == EntityState.Modified).ToList())
-            {
-                entity.Entity.ModifiedDate = DateTime.Now;
-            }
-        }
-
-        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-        {
-            PreInsertListener();
-            UpdateListener();
-            return await base.SaveChangesAsync(cancellationToken);
-        }
+        return base.SaveChangesAsync(cancellationToken);
     }
 }

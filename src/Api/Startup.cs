@@ -1,73 +1,80 @@
 ﻿using System;
+using Api.Attribute;
+using ApplicationService.Common;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using Infrastructure.IoC;
+using Infrastructure.IoC.Modules;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
-namespace Api
+namespace Api;
+
+public class Startup
 {
-    public class Startup
+    public IConfiguration Configuration { get; }
+
+    public Startup(IConfiguration configuration)
     {
-        private readonly IWebHostEnvironment _env;
-        private readonly IConfiguration _configuration;
-        public Startup(
-            IConfiguration configuration,
-            IWebHostEnvironment env
-            )
+        var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        var environmentNamePath = string.IsNullOrEmpty(environmentName) ? "" : environmentName + ".";
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(AppContext.BaseDirectory)
+            .AddJsonFile("appsettings.json")
+            .AddJsonFile($"appsettings.{environmentNamePath}json", false)
+            .AddEnvironmentVariables();
+
+
+        Configuration = builder.Build();
+    }
+
+    public void ConfigureServices(IServiceCollection services)
+    {
+        RepositoryModule.AddDbContext(services, Configuration);
+        LoggingModule.AddLogging(Configuration);
+        services.AddControllers(options => options.Filters.Add(new ValidateModelAttribute(Bootstrapper.Container.Resolve<IAppLogger>())));
+
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+        services.AddSwaggerGen(c =>
         {
-            _env = env;
-            _configuration = configuration;
+            c.SwaggerDoc(
+                "v1",
+                new OpenApiInfo
+                {
+                    Title = "Clean.Api",
+                    Version = "v1"
+                });
+        });
+    }
+
+
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    {
+        var container = app.ApplicationServices.GetAutofacRoot();
+        Bootstrapper.SetContainer(container);
+
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
         }
 
-        public void ConfigureServices(IServiceCollection services)
-        {
+        app.UseExceptionHandler("/error");
+        app.UseSwagger();
+        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Clean.Api v1"));
 
+        app.UseRouting();
+        app.UseAuthorization();
+        app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+    }
 
-            services.AddCors();
-            services.AddControllers();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-            services.AddDatabaseConfiguration(_configuration.GetConnectionString("DefaultConnection"));
-
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            });
-    
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-
-            app.UseHttpsRedirection();
-
-            app.UseRouting();
-
-            // global cors policy
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
-
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-        }
+    public void ConfigureContainer(ContainerBuilder builder)
+    {
+        Bootstrapper.RegisterModules(builder);
     }
 }
