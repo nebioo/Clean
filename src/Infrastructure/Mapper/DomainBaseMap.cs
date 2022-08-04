@@ -1,12 +1,12 @@
-﻿using System;
-using Domain.Common;
+﻿using Domain.Common;
 using Domain.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Repository;
 
 namespace Infrastructure.Mapper;
 
-public abstract class DomainBaseMap<T> where T : DomainBase
+public abstract class DomainBaseMap<T> where T : RepositoryBase
 {
     protected abstract void Map(EntityTypeBuilder<T> eb);
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 using Infrastructure.Mapper;
+using Repository;
 
 namespace Infrastructure.Persistence;
 
@@ -31,7 +32,7 @@ public class ApplicationDbContext : DbContext
 
         foreach (var entity in added)
         {
-            if (entity is not DomainBase track) continue;
+            if (entity is not RepositoryBase track) continue;
             track.CreatedDate = DateTime.Now;
             track.SetIsActive(true);
         }
@@ -43,7 +44,7 @@ public class ApplicationDbContext : DbContext
 
         foreach (var entity in modified)
         {
-            if (entity is not DomainBase track) continue;
+            if (entity is not RepositoryBase track) continue;
             track.ModifiedDate = DateTime.Now;
         }
         return base.SaveChangesAsync(cancellationToken);

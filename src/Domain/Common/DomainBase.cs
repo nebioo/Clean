@@ -1,18 +1,12 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
+using Repository;
 
 namespace Domain.Common;
 
-public abstract class DomainBase
+public class DomainBase : RepositoryBase
 {
-    [Key]
-    public Guid Id { get; set; }
-    public DateTime CreatedDate { get; set; }
-    public DateTime? ModifiedDate { get; set; }
-    public bool IsActive { get; protected set; }
-
-    public void SetIsActive(bool value)
+    public DomainBase()
     {
-        IsActive = value;
     }
 }
+

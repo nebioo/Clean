@@ -5,7 +5,7 @@ namespace Domain.Common;
 
 public static class ApplicationMessage
 {
-    private const string ApiCode = "SEC";
+    private const string ApiCode = "CLN";
     private const string CommonUserErrorMessage =
         "Your transaction cannot be performed at this time. Please try again later.";
 
