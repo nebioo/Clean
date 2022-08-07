@@ -21,4 +21,4 @@ dotnet restore
 dotnet run
 ```
 
-open https://localhost:5001/swagger/index.html in browser
+open https://localhost:5000/swagger/index.html in browser
