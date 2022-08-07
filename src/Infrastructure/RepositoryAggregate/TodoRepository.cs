@@ -1,7 +1,7 @@
 ﻿using System;
+using Clean.Repository;
 using Domain.TodoAggregate;
 using Infrastructure.Persistence;
-using Repository;
 
 namespace Infrastructure.RepositoryAggregate;
 
