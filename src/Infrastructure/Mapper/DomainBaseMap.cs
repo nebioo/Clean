@@ -1,8 +1,6 @@
-﻿using Domain.Common;
-using Domain.Helpers;
+﻿using Clean.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Repository;
 
 namespace Infrastructure.Mapper;
 

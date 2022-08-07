@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using Domain.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 using Infrastructure.Mapper;
-using Repository;
+using Clean.Repository;
 
 namespace Infrastructure.Persistence;
 
