@@ -420,7 +420,6 @@ api/.vs/Clean/v16/.suo
 *.config
 *.v2
 api/.vs/Clean/v16/.suo
-*.json
 *.dll
 *.exe
 *.pdb
